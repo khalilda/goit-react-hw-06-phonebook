@@ -1,60 +1,82 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Component } from 'react';
-import FormModule from './FormContact.module.css';
+import { addContact } from 'components/redux/sliceContacts';
 import { nanoid } from 'nanoid';
+import React from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import FormModule from './FormContact.module.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export class FormContact extends Component {
-    handleFormSubmit = event => {
-      event.preventDefault();
-  
-      const name = event.target.name.value;
-      const number = event.target.number.value;
-      const { addContact } = this.props;
-  
-      addContact({ id: nanoid(), name, number });
-      event.target.reset();
+export const FormContact = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+
+  const onInputChange = event => {
+    const { name, value } = event.currentTarget;
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+
+      case 'number':
+        setNumber(value);
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  const onSubmit = event => {
+    event.preventDefault();
+    const contact = {
+      name: name,
+      number: number,
+      id: nanoid(),
     };
+    toast.success(`${contact.name} added to contacts.`);
+    dispatch(addContact(contact));
+    setName('');
+    setNumber('');
+  };
 
-  render() {
-    return (
-      <div>
-        <form className={FormModule.form} onSubmit={this.onSubmit}>
-          <label className={FormModule.lable}>
-            <input
-              className={FormModule.input}
-              type="text"
-              name="name"
-              placeholder="Name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={this.state.name}
-              onChange={this.onInputChange}
-            />
-          </label>
-          <label className={FormModule.lable}>
-            <input
-              className={FormModule.input}
-              type="tel"
-              name="number"
-              placeholder="Number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={this.state.number}
-              onChange={this.onInputChange}
-            />
-          </label>
-          <button type="submit" className={FormModule.button}>
-            Add contact
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
-
-FormContact.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  return (
+    <div>
+      <form className={FormModule.form} onSubmit={onSubmit}>
+        <label className={FormModule.lable}>
+          <input
+            className={FormModule.input}
+            type="text"
+            name="name"
+            placeholder="Name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={name}
+            onChange={onInputChange}
+          />
+        </label>
+        <label className={FormModule.lable}>
+          <input
+            className={FormModule.input}
+            type="tel"
+            name="number"
+            placeholder="Number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            value={number}
+            onChange={onInputChange}
+          />
+        </label>
+        <button type="submit" className={FormModule.button}>
+          Add contact
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
+  );
 };

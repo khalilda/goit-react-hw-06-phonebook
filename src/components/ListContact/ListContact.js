@@ -1,33 +1,33 @@
-import PropTypes from 'prop-types';
-import AddIcon from '../Icons/AddIcon';
-import ListModule from './ListContact.module.css'
+import ListModule from './ListContact.module.css';
 
-export const ListContact = ({ contacts, onRemoveContact }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'components/redux/contactsSelector';
+import { removeContacts } from 'components/redux/sliceContacts';
+import AddIcon from 'components/Icons/AddIcon';
+
+export const ListContact = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   return (
     <ul className={ListModule.list}>
-      {contacts.map(({ id, name, number }) => (
-        <li key={id} className={ListModule.item}>
-          {name + ': ' + number}
-          <button
-            type="button"
-            className={ListModule.removeButton}
-            onClick={() => onRemoveContact(id, name)}
-            aria-label="Delete contact"
-          >
-            <AddIcon width="45" height="45" />
-          </button>
-        </li>
-      ))}
+      {contacts && contacts.length > 0 ? (
+        contacts.map(({ id, name, number }) => (
+          <li key={id} className={ListModule.item}>
+            <button
+              type="button"
+              className={ListModule.removeButton}
+              onClick={() => dispatch(removeContacts(id))}
+              aria-label="Delete contact"
+            >
+              <AddIcon width="45" height="45" />
+            </button>
+            {name + ': ' + number}
+          </li>
+        ))
+      ) : (
+        <p className={ListModule.alert}>Sorry! You have no contacts created.</p>
+      )}
     </ul>
   );
-};
-
-ListContact.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
 };
