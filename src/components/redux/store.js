@@ -13,11 +13,10 @@ import {
   PURGE,
 } from 'redux-persist';
 
-const blacklist = ['filtered'];
 const persistConfig = {
   key: 'contacts',
   storage,
-  transforms: [blacklist],
+  lacklist: ['filtered'],
 };
 
 const persistedReducer = persistReducer(persistConfig, contactsReducer);
