@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FilterModule from './FilterContact.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getFilter } from 'components/redux/selectors';
+import { getFilter } from 'components/redux/contactsSelector';
 
 export const FilterContact = () => {
   const dispatch = useDispatch();
