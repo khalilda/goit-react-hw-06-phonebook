@@ -55,10 +55,10 @@ import { availableContacts } from './availableContacts';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: { contacts: [...availableContacts], filtered: '' },
+  initialState: { contacts: [availableContacts], filtered: '' },
   reducers: {
     addContact: (state, action) => {
-      state.contacts = [...state.contacts, action.payload];
+      state.contacts = [state.contacts, action.payload];
     },
     filterContacts: (state, action) => {
       state.filtered = action.payload;
