@@ -15,9 +15,3 @@ export const App = () => {
     </div>
   );
 };
-
-//q. why its not working?
-// import { connect } from 'react-redux';
-// import { getFilter } from 'components/redux/contactsSelector';
-// import { removeContacts } from 'components/redux/sliceContacts';
-// import AddIcon from 'components/Icons/AddIcon';
