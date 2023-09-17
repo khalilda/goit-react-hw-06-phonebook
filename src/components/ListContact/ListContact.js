@@ -1,13 +1,10 @@
 import ListModule from './ListContact.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilter } from 'components/redux/contactsSelector';
 import { removeContacts } from 'components/redux/sliceContacts';
 import AddIcon from 'components/Icons/AddIcon';
 
 export const ListContact = () => {
-  const contacts = useSelector(getFilter);
-  // const contacts = useSelector(state => state.contacts);
-
+  const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
   return (
