@@ -3,7 +3,7 @@ import { availableContacts } from './availableContacts';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: { contacts: [availableContacts], filtered: '' },
+  initialState: { contacts: [...availableContacts], filtered: '' },
   reducers: {
     addContact: (state, action) => {
       state.contacts.push(action.payload);
