@@ -6,6 +6,8 @@ import AddIcon from 'components/Icons/AddIcon';
 
 export const ListContact = () => {
   const contacts = useSelector(getFilter);
+  // const contacts = useSelector(state => state.contacts);
+
   const dispatch = useDispatch();
 
   return (
